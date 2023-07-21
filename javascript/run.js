@@ -1,6 +1,12 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs'
+import util from 'util'
+const log_file = fs.createWriteStream('./expected_output.txt', {flags : 'w'});
+
+console.log = function(d) { //
+  log_file.write(util.format(d) + '\n');
+};
 
 /** This kata uses "fetch()", be aware you need at least Node 18 to run the script */
 var USER_URL = 'https://randomuser.me/api/?inc=gender,name,email,location&results=5&seed=a9b25cd955e2037h';
