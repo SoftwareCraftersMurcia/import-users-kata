@@ -1,0 +1,11 @@
+{
+    "name": "kata/import-users",
+    "autoload": {
+        "psr-4": {
+            "Kata\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=8.1"
+    }
+}
