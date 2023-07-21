@@ -27,7 +27,7 @@ export async function extract() {
     }
     var csvProviders = []
     csvProviders.forEach(a => {
-      a.concat(csv_provider[0], $a)
+      a.concat(csv_provider[0])
     })
     csv_provider.shift() // Remove header column
 
@@ -45,7 +45,7 @@ export async function extract() {
   var web_provider = (await (await fetch(url)).json()).results;
   var pr = []
   pr.forEach(a => {
-    a.concat(web_provider[0], $a)
+    a.concat(web_provider[0])
   })
 
   var b = []
