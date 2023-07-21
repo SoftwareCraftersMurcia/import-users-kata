@@ -2,18 +2,20 @@
 
 declare(strict_types=1);
 
+require './vendor/autoload.php';
+
 const USER_URL = 'https://randomuser.me/api/?inc=gender,name,email,location&results=5&seed=a9b25cd955e2037h';
 
-# Parse CSV file
-$getcurrentworkingDirectory = __DIR__;
+function parseCSVFile(): array
+{
+    // fields: ID, gender, Name ,country, postcode, email, Birthdate
+    $userList = array_map('str_getcsv', file(__DIR__ . '/../users.csv'));
+    array_shift($userList); # Remove header column
 
-// fields: ID, gender, Name ,country, postcode, email, Birthdate
-$csv_provider = array_map('str_getcsv', file($getcurrentworkingDirectory . '/../users.csv'));
-$csvProviders = [];
-array_walk($csvProviders, function (&$a) use ($csv_provider) {
-    $a = array_combine($csv_provider[0], $a);
-});
-array_shift($csv_provider); # Remove header column
+    return $userList;
+}
+
+$userList = parseCSVFile();
 
 # Parse URL content
 $url = USER_URL;
@@ -46,7 +48,7 @@ foreach ($web_provider as $item) {
  *                   first_name -> string
  *                   last_name -> string ] array
  */
-$providers = array_merge($csv_provider, $b); # merge arrays
+$providers = array_merge($userList, $b); # merge arrays
 
 # Print users
 echo "*********************************************************************************" . PHP_EOL;
