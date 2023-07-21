@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 require './vendor/autoload.php';
 
-const USER_URL = 'https://randomuser.me/api/?inc=gender,name,email,location&results=5&seed=a9b25cd955e2037h';
-
 function parseCSVFile(): array
 {
     // fields: ID, gender, Name ,country, postcode, email, Birthdate
@@ -18,12 +16,8 @@ function parseCSVFile(): array
 $userList = parseCSVFile();
 
 # Parse URL content
-$url = USER_URL;
-$web_provider = json_decode(file_get_contents($url))->results;
-$pr = [];
-array_walk($pr, function (&$a) use ($web_provider) {
-    $a = array_combine($web_provider[0], $a);
-});
+const USER_URL = 'https://randomuser.me/api/?inc=gender,name,email,location&results=5&seed=a9b25cd955e2037h';
+$web_provider = json_decode(file_get_contents(USER_URL))->results;
 
 $b = [];
 $i = 100000000000;
