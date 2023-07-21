@@ -35,6 +35,7 @@ public class UrlUserProvider implements UserProvider {
 
     BigInteger j = new BigInteger("100000000000");
     ArrayList<String[]> resultOfURL = new ArrayList<>();
+    List<User> users2 = new ArrayList<>();
     for (int i = 0; i < results.length(); i++) {
       j = j.add(new BigInteger("1"));
       resultOfURL.add(new String[]{
@@ -46,6 +47,7 @@ public class UrlUserProvider implements UserProvider {
         results.getJSONObject(i).getString("email"),
         String.valueOf((new GregorianCalendar()).get(Calendar.YEAR)) // birhtday
       });
+      //users2.add(new User(j.toString(), ))
     }
     return resultOfURL;
   }
