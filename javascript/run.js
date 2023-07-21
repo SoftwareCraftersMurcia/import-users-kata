@@ -8,28 +8,34 @@ console.log = function(d) { //
   log_file.write(util.format(d) + '\n');
 };
 
+function parseCSVFile() {
+  // Parse CSV file
+  const __filename = fileURLToPath(import.meta.url);
+  var getcurrentworkingDirectory = path.dirname(__filename);
+
+// fields: ID, gender, Name ,country, postcode, email, Birthdate
+  var q = fs.readFileSync(
+    getcurrentworkingDirectory + '/../users.csv', 'utf8', (err, data) => data.toString().split("\n")
+  ).split("\n")
+
+  var csv_provider = []
+  for (var h = 0; h < q.length; h++) {
+    if (q[h] == '') continue
+    csv_provider.push(q[h].split(','))
+  }
+  var csvProviders = []
+  csvProviders.forEach(a => {
+    a.concat(csv_provider[0], $a)
+  })
+  csv_provider.shift() // Remove header column
+
+  return csv_provider
+}
+
 /** This kata uses "fetch()", be aware you need at least Node 18 to run the script */
 var USER_URL = 'https://randomuser.me/api/?inc=gender,name,email,location&results=5&seed=a9b25cd955e2037h';
 
-// Parse CSV file
-const __filename = fileURLToPath(import.meta.url);
-var getcurrentworkingDirectory = path.dirname(__filename);
-
-// fields: ID, gender, Name ,country, postcode, email, Birthdate
-var q = fs.readFileSync(
-  getcurrentworkingDirectory + '/../users.csv', 'utf8', (err, data) => data.toString().split("\n")
-).split("\n")
-
-var csv_provider = []
-for (var h = 0; h < q.length; h++) {
-  if (q[h] == '') continue
-  csv_provider.push(q[h].split(','))
-}
-var csvProviders = []
-csvProviders.forEach(a => {
-  a.concat(csv_provider[0], $a)
-})
-csv_provider.shift() // Remove header column
+const csv_provider = parseCSVFile()
 
 // Parse URL content
 let url = USER_URL
