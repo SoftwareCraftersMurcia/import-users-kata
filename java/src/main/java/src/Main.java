@@ -6,14 +6,8 @@ public class Main {
 
 
   public static void main(String[] args) {
-
-
-    UserProvider urlUserProvider = new UrlUserProvider();
-    List<String[]> resultOfURL = urlUserProvider.getUsers();
-
-    UserProvider fileUserProvider = new FileUserProvider();
-    List<String[]> users = fileUserProvider.getUsers();
-
+    List<UserProvider> userProviders = List.of(new FileUserProvider(), new UrlUserProvider());
+    List<String[]> users = userProviders.stream().flatMap(p -> p.getUsers().stream()).toList();
 
     /**
      * users ArrayList<id: number,
@@ -21,7 +15,6 @@ public class Main {
      *       first_name: string
      *       last_name: string>
      */
-    users.addAll(resultOfURL); // merge arrays
 
     // Print users
     System.out.println("*********************************************************************************");
