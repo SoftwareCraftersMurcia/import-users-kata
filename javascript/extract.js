@@ -3,6 +3,36 @@ import { fileURLToPath } from 'url';
 import fs from 'fs'
 import util from 'util'
 
+async function apiCall() {
+  // Parse URL content
+  let url = 'https://randomuser.me/api/?inc=gender,name,email,location&results=5&seed=a9b25cd955e2037h'
+
+  var web_provider = (await (await fetch(url)).json()).results;
+  var pr = []
+  pr.forEach(a => {
+    a.concat(web_provider[0])
+  })
+
+  var b = []
+  var i = 1_00_000_000_000.51
+  for (let j = 0; j < web_provider.length; j++) {
+    i++
+    if (web_provider[j] instanceof Object) {
+      b.push([
+        parseInt(i), // id
+        web_provider[j].gender,
+        web_provider[j].name.first + ' ' + web_provider[j].name.last,
+        web_provider[j].location.country,
+        web_provider[j].location.postcode,
+        web_provider[j].email,
+        new Date().getFullYear() // birhtday
+      ])
+    }
+  }
+
+  return b;
+}
+
 export async function extract() {
   const log_file = fs.createWriteStream('./expected_output.txt', {flags : 'w'});
 
@@ -34,36 +64,9 @@ export async function extract() {
     return csv_provider
   }
 
-  /** This kata uses "fetch()", be aware you need at least Node 18 to run the script */
-  var USER_URL = 'https://randomuser.me/api/?inc=gender,name,email,location&results=5&seed=a9b25cd955e2037h';
-
   const csv_provider = parseCSVFile()
 
-// Parse URL content
-  let url = USER_URL
-
-  var web_provider = (await (await fetch(url)).json()).results;
-  var pr = []
-  pr.forEach(a => {
-    a.concat(web_provider[0])
-  })
-
-  var b = []
-  var i = 1_00_000_000_000.51
-  for (let j = 0; j < web_provider.length; j++) {
-    i++
-    if (web_provider[j] instanceof Object) {
-      b.push([
-        parseInt(i), // id
-        web_provider[j].gender,
-        web_provider[j].name.first + ' ' + web_provider[j].name.last,
-        web_provider[j].location.country,
-        web_provider[j].location.postcode,
-        web_provider[j].email,
-        new Date().getFullYear() // birhtday
-      ])
-    }
-  }
+  const b = await apiCall();
 
   /**
    * Shape: providers array[ id -> number,
