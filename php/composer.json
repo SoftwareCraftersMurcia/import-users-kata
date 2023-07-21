@@ -5,6 +5,11 @@
             "Kata\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "KataTest\\": "tests/"
+        }
+    },
     "require": {
         "php": ">=8.1"
     },
