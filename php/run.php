@@ -16,8 +16,6 @@ function parseCSVFile(): array
     return $csv_provider;
 }
 
-$csv_provider = parseCSVFile();
-
 function parseURLContent(): array
 {
     $url = USER_URL;
@@ -43,7 +41,8 @@ function parseURLContent(): array
     return $formattedUsers;
 }
 
-$b = parseURLContent();
+$webUsers = parseURLContent();
+$csvUsers = parseCSVFile();
 
 /**
  * @param $providers [ id -> number,
@@ -51,7 +50,7 @@ $b = parseURLContent();
  *                   first_name -> string
  *                   last_name -> string ] array
  */
-$providers = array_merge($csv_provider, $b); # merge arrays
+$providers = array_merge($csvUsers, $webUsers); # merge arrays
 
 # Print users
 echo "*********************************************************************************" . PHP_EOL;
