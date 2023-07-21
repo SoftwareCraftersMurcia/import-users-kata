@@ -27,10 +27,6 @@ public class Main {
       csv_providers.add(attributes);
     }
     List<String[]> csvProviers = new ArrayList<>();
-    List<String> a = new ArrayList<>();
-    for (int i = 0; i < a.size(); i++) {
-      a.add(csvProviers.get(i)[0]);
-    }
     csv_providers.remove(0); // Remove header column
 
     // Parse URL content
@@ -47,16 +43,12 @@ public class Main {
     webProvider.close();
     JSONObject jsonObject = new JSONObject(result);
     JSONArray results = jsonObject.getJSONArray("results");
-    a = new ArrayList<>();
-    for (int i = 0; i < a.size(); i++) {
-      a.add(results.getString(i));
-    }
 
     BigInteger j = new BigInteger("100000000000");
-    ArrayList<String[]> b = new ArrayList<>();
+    ArrayList<String[]> resultOfURL = new ArrayList<>();
     for (int i = 0; i < results.length(); i++) {
       j = j.add(new BigInteger("1"));
-      b.add(new String[] {
+      resultOfURL.add(new String[] {
         j.toString(), // id
         results.getJSONObject(i).getString("gender"),
         results.getJSONObject(i).getJSONObject("name").getString("first") + " " + results.getJSONObject(i).getJSONObject("name").getString("last"),
@@ -73,7 +65,7 @@ public class Main {
      *       first_name: string
      *       last_name: string>
      */
-    csv_providers.addAll(b); // merge arrays
+    csv_providers.addAll(resultOfURL); // merge arrays
 
     // Print users
     System.out.println("*********************************************************************************");
