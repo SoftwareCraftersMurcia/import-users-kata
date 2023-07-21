@@ -6,42 +6,44 @@ const USER_URL = 'https://randomuser.me/api/?inc=gender,name,email,location&resu
 
 function parseCSVFile(): array
 {
-# Parse CSV file
+    # Parse CSV file
     $getCurrentWorkingDirectory = __DIR__;
 
     // fields: ID, gender, Name ,country, postcode, email, Birthdate
     $csv_provider = array_map('str_getcsv', file($getCurrentWorkingDirectory . '/users.csv'));
-    
+
     array_shift($csv_provider); # Remove header column
     return $csv_provider;
 }
 
 $csv_provider = parseCSVFile();
 
-# Parse URL content
-$url = USER_URL;
-$web_provider = json_decode(file_get_contents($url))->results;
-$pr = [];
-array_walk($pr, function (&$a) use ($web_provider) {
-    $a = array_combine($web_provider[0], $a);
-});
+function parseURLContent(): array
+{
+    $url = USER_URL;
+    $web_provider = json_decode(file_get_contents($url))->results;
 
-$b = [];
-$i = 100000000000;
-foreach ($web_provider as $item) {
-    $i++;
-    if ($item instanceof stdClass) {
-        $b[] = [
-            $i, // id
-            $item->gender,
-            $item->name->first . ' ' . $item->name->last,
-            $item->location->country,
-            $item->location->postcode,
-            $item->email,
-            (new Datetime('now'))->format('Y') // birhtday
-        ];
+    $formattedUsers = [];
+    $id = 100000000000;
+    foreach ($web_provider as $item) {
+        $id++;
+        if ($item instanceof stdClass) {
+            $formattedUsers[] = [
+                $id,
+                $item->gender,
+                $item->name->first . ' ' . $item->name->last,
+                $item->location->country,
+                $item->location->postcode,
+                $item->email,
+                (new Datetime('now'))->format('Y') // birhtday
+            ];
+        }
     }
+
+    return $formattedUsers;
 }
+
+$b = parseURLContent();
 
 /**
  * @param $providers [ id -> number,
