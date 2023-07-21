@@ -5,10 +5,11 @@ import java.util.List;
 public class Printer {
 
   /**
-   * users ArrayList<id: number,
-   *       email: string
+   * users ArrayList<
+   *       id: number,
+   *       country: string
    *       first_name: string
-   *       last_name: string>
+   *       email: string
    */
   static void extracted(List<String[]> users) {
     // Print users

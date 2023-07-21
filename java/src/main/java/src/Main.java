@@ -9,8 +9,6 @@ public class Main {
     List<UserProvider> userProviders = List.of(new FileUserProvider(), new UrlUserProvider());
     List<String[]> users = userProviders.stream().flatMap(p -> p.getUsers().stream()).toList();
 
-
-
     Printer.extracted(users);
   }
 }
