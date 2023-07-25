@@ -1,0 +1,22 @@
+{
+    "name": "import-users-kata/php",
+    "autoload": {
+        "psr-4": {
+            "ImportUsersKata\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ImportUsersKata\\Test\\": "test/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Luis Rovirosa Mairlot",
+            "email": "luis@codium.team"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "^10.2"
+    }
+}
